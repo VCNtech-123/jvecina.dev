@@ -4,7 +4,7 @@ import cors from 'cors'
 import { securityMiddleware } from './middleware/security.middleware';
 import { errorMiddleware } from './middleware/error.middleware';
 import authRoutes from './modules/auth/auth.routes'
-import projectRoutes from './modules/projects/projet.routes'
+import projectRoutes from './modules/projects/project.routes'
 
 
 const app = express()

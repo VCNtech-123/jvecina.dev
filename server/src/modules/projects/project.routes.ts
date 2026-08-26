@@ -7,8 +7,8 @@ import { createProjectSchema, getProjectsSchema, getProjectBySlugSchema } from '
 
 const router = Router()
 
-router.post("/", validate(createProjectSchema), createProject)
+router.post("/", protect, validate(createProjectSchema), createProject)
 router.get("/", validate(getProjectsSchema), getProjects)
-router.get("/:slug", protect, validate(getProjectBySlugSchema), getProjectBySlug)
+router.get("/:slug", validate(getProjectBySlugSchema), getProjectBySlug)
 
 export default router;
