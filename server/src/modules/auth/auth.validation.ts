@@ -36,3 +36,6 @@ export const loginSchema = z.object({
 export const registerSchema = z.object({
     body: registerBody
 })
+
+export type LoginBody = z.infer<typeof loginBody>
+export type RegisterBody = z.infer<typeof registerBody>
