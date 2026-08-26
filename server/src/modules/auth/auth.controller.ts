@@ -1,7 +1,22 @@
 import { Request, Response } from 'express'
-import { loginUserService } from './auth.service';
+import { loginUserService, registerUserService } from './auth.service';
 import { generateToken } from '../../utils/generateToken'
 import { CookieOptions } from 'express';
+
+export const register = async (req: Request, res: Response) => {
+
+    const { name, email, password } = req.body;
+    const user = await registerUserService(name, email, password);
+
+    res.status(201).json({
+        status: "success",
+        data: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+        },
+    });
+};
 
 export const loginUser = async (req: Request, res: Response) => {
 
