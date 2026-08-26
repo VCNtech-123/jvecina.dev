@@ -29,3 +29,34 @@ export const createProjectService = async (payload: CreateProjectBody): Promise<
     throw err;
   }
 };
+
+export const getProjectsService = async (opts?: {
+  featured?: boolean;
+  page?: number;
+  limit?: number;
+}) => {
+  const featured = opts?.featured;
+  const page = opts?.page ?? 1;
+  const limit = opts?.limit ?? 20;
+  const skip = (page - 1) * limit;
+
+  const filter: Record<string, unknown> = {};
+  if (typeof featured === "boolean") filter.featured = featured;
+
+  const projects = await Project.find(filter)
+    .sort({ featured: -1, order: 1, createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  return projects;
+};
+
+export const getProjectBySlugService = async (slug: string) => {
+  const project = await Project.findOne({ slug });
+
+  if (!project) {
+    throw new ApiError(404, "Project not found");
+  }
+
+  return project;
+};
