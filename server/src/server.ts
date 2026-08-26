@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import app from './app'
-import { env } from '../config/env'
+import { env } from './config/env'
 import dns from 'node:dns';
 
 dns.setServers(['1.1.1.1', '8.8.8.8']);
