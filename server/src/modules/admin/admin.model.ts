@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 import bcrypt from 'bcrypt';
 
 
@@ -43,5 +43,5 @@ adminSchema.methods.comparePassword = async function (
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-export const Admin = mongoose.model<IAdmin>('Admin', adminSchema)
+export const Admin = model<IAdmin>('Admin', adminSchema)
 

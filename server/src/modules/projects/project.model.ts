@@ -70,4 +70,4 @@ const projectSchema = new Schema<IProject>(
 
 projectSchema.index({ featured: 1, order: 1, createdAt: -1 });
 
-export const Project = model("Project", projectSchema);
+export const Project = model<IProject>("Project", projectSchema);
