@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    // Environment Settings
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+
+    // Custom Type Resolution
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
+
+    // Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": false,
+
+    // Recommended Options
+    "strict": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
