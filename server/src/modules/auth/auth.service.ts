@@ -1,7 +1,7 @@
 import { Admin } from "../admin/admin.model";
 import { ApiError } from "../../utils/ApiError";
 
-export const loginUser = async (
+export const loginUserService = async (
     email: string,
     password: string
 ) => {

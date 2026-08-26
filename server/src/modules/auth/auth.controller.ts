@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
-import { loginUser } from './auth.service';
+import { loginUserService } from './auth.service';
 import { generateToken } from '../../utils/generateToken'
 import { CookieOptions } from 'express';
 
-export const login = async (req: Request, res: Response) => {
+export const loginUser = async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
-    const user = await loginUser(email, password);
+    const user = await loginUserService(email, password);
     const token = generateToken(user._id.toString());
 
     const isProd = process.env.NODE_ENV === "production";
