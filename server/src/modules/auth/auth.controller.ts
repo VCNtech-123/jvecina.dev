@@ -2,10 +2,14 @@ import { Request, Response } from 'express'
 import { loginUserService, registerUserService } from './auth.service';
 import { generateToken } from '../../utils/generateToken'
 import { CookieOptions } from 'express';
+import { LoginBody, RegisterBody } from './auth.validation'
 
 export const register = async (req: Request, res: Response) => {
 
-    const { name, email, password } = req.body;
+    const { body } = res.locals.validated as {
+        body: RegisterBody
+    };
+    const { name, email, password } = body
     const user = await registerUserService(name, email, password);
 
     res.status(201).json({
@@ -20,9 +24,12 @@ export const register = async (req: Request, res: Response) => {
 
 export const loginUser = async (req: Request, res: Response) => {
 
-    const { email, password } = req.body;
-    const user = await loginUserService(email, password);
-    const token = generateToken(user._id.toString());
+    const { body } = res.locals.validated as {
+        body: LoginBody
+    };
+    const { email, password } = body
+    const admin = await loginUserService(email, password);
+    const token = generateToken(admin._id.toString());
 
     const isProd = process.env.NODE_ENV === "production";
 
@@ -40,9 +47,9 @@ export const loginUser = async (req: Request, res: Response) => {
         status: "success",
         token,
         data: {
-            id: user._id,
-            name: user.name,
-            email: user.email,
+            id: admin._id,
+            name: admin.name,
+            email: admin.email,
         },
     });
 }
