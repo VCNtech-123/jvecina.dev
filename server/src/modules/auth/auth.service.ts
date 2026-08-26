@@ -19,3 +19,23 @@ export const loginUserService = async (
 
     return admin;
 }
+
+export const registerUserService = async (
+  name: string,
+  email: string,
+  password: string
+) => {
+  const existingAdmin = await Admin.findOne({ email });
+
+  if (existingAdmin) {
+    throw new ApiError(401, "Email already registered!");
+  }
+
+  const admin = await Admin.create({
+    name,
+    email,
+    password,
+  });
+
+  return admin;
+};
