@@ -1,87 +1,87 @@
 import { Link } from "react-router-dom";
 import Container from "../ui/Container";
-import Card from "../ui/Card";
-import TechBadge from "../projects/TechBadge";
 
 const HomeHero = () => {
   return (
-    <section className="pt-10">
+    <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
       <Container>
-        <div className="grid gap-6 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
-          {/* Left: editorial hero */}
-          <div>
-            <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted">
-              Full-stack developer
+        <div className="max-w-4xl">
+          {/* Eyebrow */}
+          <div className="flex items-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-accent" />
+
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+              John Francis Vecina · Full-stack developer
             </p>
-
-            <h1 className="mt-3 text-4xl font-semibold leading-[1.05] tracking-tight md:text-5xl">
-              I build full-stack web apps with clean APIs, reliable data, and sharp UI.
-            </h1>
-
-            <p className="mt-4 max-w-2xl text-[15px] leading-7 text-muted">
-              MERN + PostgreSQL experience. I like projects that involve authentication, dashboards,
-              and real-world CRUD workflows—built with maintainable architecture.
-            </p>
-
-            <div className="mt-6 flex flex-wrap gap-2">
-              <Link to="/projects" className="btn-primary">
-                View projects
-              </Link>
-              <Link to="/contact" className="btn-secondary">
-                Contact
-              </Link>
-              <a
-                className="btn-ghost"
-                href="/resume.pdf"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Resume
-              </a>
-            </div>
-
-            <div className="mt-8">
-              <p className="text-sm font-medium text-text">Core stack</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {["react", "typescript", "nodejs", "express", "mongodb", "postgresql", "tailwind"].map((t) => (
-                  <TechBadge key={t} techKey={t} />
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* Right: “now” card */}
-          <Card className="p-5">
-            <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted">
-              Now
-            </p>
+          {/* Main heading */}
+          <h1 className="mt-6 max-w-4xl text-[44px] font-semibold leading-[1.02] tracking-[-0.035em] sm:text-[56px] md:text-[68px] lg:text-[76px]">
+            I build web applications
+            <br className="hidden sm:block" />
+            <span className="text-accent"> from idea to deployment.</span>
+          </h1>
 
-            <h2 className="mt-2 text-[17px] font-semibold tracking-tight">
-              What I’m focused on
-            </h2>
+          {/* Description */}
+          <p className="mt-7 max-w-2xl text-[16px] leading-7 text-muted md:text-[17px]">
+            Full-stack developer focused on React, TypeScript, Node.js, and
+            MongoDB. I build practical applications with clean interfaces,
+            structured APIs, and maintainable code.
+          </p>
 
-            <ul className="mt-3 space-y-3 text-[15px] leading-6 text-muted">
-              <li className="flex gap-3">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                <span>Building production-style CRUD apps with good validation + error handling.</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                <span>Improving UI hierarchy (typography, spacing, layout composition).</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                <span>Deployments + environment configuration + API security basics.</span>
-              </li>
-            </ul>
+          {/* Actions */}
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Link to="/projects" className="btn-primary">
+              View projects
+            </Link>
 
-            <div className="mt-5 border-t border-border pt-4">
-              <p className="text-sm text-muted">
-                Based in <span className="text-text">PH</span> • Open to{" "}
-                <span className="text-text">full-stack roles</span>
+            <Link to="/contact" className="btn-secondary">
+              Get in touch
+            </Link>
+
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-ghost"
+            >
+              Resume ↗
+            </a>
+          </div>
+
+          {/* Bottom metadata */}
+          <div className="mt-12 flex flex-col gap-5 border-t border-border pt-6 sm:flex-row sm:items-center sm:gap-8">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+                Currently
+              </p>
+              <p className="mt-1 text-sm text-text">
+                Building <span className="text-accent">Plinth</span>
               </p>
             </div>
-          </Card>
+
+            <div className="hidden h-8 w-px bg-border sm:block" />
+
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+                Stack
+              </p>
+              <p className="mt-1 text-sm text-text">
+                React · TypeScript · Node.js · MongoDB
+              </p>
+            </div>
+
+            <div className="hidden h-8 w-px bg-border sm:block" />
+
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+                Based in
+              </p>
+              <p className="mt-1 text-sm text-text">
+                Manila, Philippines
+              </p>
+            </div>
+          </div>
         </div>
       </Container>
     </section>
