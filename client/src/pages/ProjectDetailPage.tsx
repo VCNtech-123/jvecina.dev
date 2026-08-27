@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { api } from "../api/api";
+import api, { getErrorMessage } from "../api/api";
 import type { ApiOneResponse, Project } from "../types/api";
 import Container from "../components/ui/Container";
 import Badge from "../components/ui/Badge";
@@ -10,24 +10,37 @@ import Card from "../components/ui/Card";
 const ProjectDetailPage = () => {
   const { slug } = useParams();
   const [project, setProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
+    let ignore = false;
+
     const run = async () => {
-      try {
-        if (!slug) return;
-        setError("");
-        const res = await api<ApiOneResponse<Project>>(`/api/projects/${slug}`);
-        setProject(res.data);
-      } catch (e) {
-        setError(e instanceof Error ? e.message : "Failed to load project");
-      } finally {
+      setLoading(true);
+      setError("");
+      setProject(null);
+
+      if (!slug) {
         setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await api.get<ApiOneResponse<Project>>(`/api/projects/${slug}`);
+        if (!ignore) setProject(res.data.data);
+      } catch (e) {
+        if (!ignore) setError(getErrorMessage(e));
+      } finally {
+        if (!ignore) setLoading(false);
       }
     };
 
     run();
+
+    return () => {
+      ignore = true;
+    };
   }, [slug]);
 
   if (loading) return <Container className="py-12 text-sm text-muted">Loading…</Container>;
@@ -47,7 +60,9 @@ const ProjectDetailPage = () => {
 
         {project.techStack?.length ? (
           <div className="mt-4 flex flex-wrap gap-2">
-            {project.techStack.map((t) => <Badge key={t}>{t}</Badge>)}
+            {project.techStack.map((t) => (
+              <Badge key={t}>{t}</Badge>
+            ))}
           </div>
         ) : null}
       </header>
@@ -73,7 +88,9 @@ const ProjectDetailPage = () => {
             <>
               <h3 className="mt-6 text-sm font-semibold">Highlights</h3>
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted">
-                {project.highlights.map((h) => <li key={h}>{h}</li>)}
+                {project.highlights.map((h) => (
+                  <li key={h}>{h}</li>
+                ))}
               </ul>
             </>
           ) : null}
