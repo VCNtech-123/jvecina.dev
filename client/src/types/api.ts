@@ -1,12 +1,17 @@
-export type ApiResponse<T> = {
+export type ApiListResponse<T> = {
+  status: string;
+  results: number;
+  data: T[];
+};
+
+export type ApiOneResponse<T> = {
   status: string;
   data: T;
-  results?: number;
 };
 
 export type Project = {
-  id?: string;
   _id?: string;
+  id?: string;
   title: string;
   slug: string;
   summary: string;
@@ -19,22 +24,5 @@ export type Project = {
   featured?: boolean;
   order?: number;
   createdAt?: string;
-};
-
-export type Message = {
-  id?: string;
-  _id?: string;
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  readAt?: string | null;
-  createdAt?: string;
-};
-
-export type Admin = {
-  id?: string;
-  _id?: string;
-  email: string;
-  name?: string;
+  updatedAt?: string;
 };
