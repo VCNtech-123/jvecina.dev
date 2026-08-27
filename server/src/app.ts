@@ -5,6 +5,7 @@ import { securityMiddleware } from './middleware/security.middleware';
 import { errorMiddleware } from './middleware/error.middleware';
 import authRoutes from './modules/auth/auth.routes'
 import projectRoutes from './modules/projects/project.routes'
+import messageRoutes from './modules/messages/message.routes'
 
 
 const app = express()
@@ -19,6 +20,7 @@ app.use(cookieParser())
 
 app.use("/api/auth", authRoutes)
 app.use("/api/projects", projectRoutes)
+app.use("/api/messages", messageRoutes)
 app.use(errorMiddleware)
 
 export default app;
