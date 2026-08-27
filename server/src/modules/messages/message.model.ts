@@ -56,4 +56,14 @@ const messageSchema = new Schema<IMessage>(
 messageSchema.index({ createdAt: -1 });
 messageSchema.index({ readAt: 1 });
 
+const baseTransform = (_doc: any, ret: any) => {
+  ret.id = ret._id;
+  delete ret._id;
+  delete ret.__v;
+  return ret;
+};
+
+messageSchema.set("toJSON", { versionKey: false, transform: baseTransform });
+messageSchema.set("toObject", { versionKey: false, transform: baseTransform });
+
 export const Message = model<IMessage>("Message", messageSchema);

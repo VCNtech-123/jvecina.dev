@@ -43,5 +43,16 @@ adminSchema.methods.comparePassword = async function (
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+const adminTransform = (_doc: any, ret: any) => {
+  ret.id = ret._id;
+  delete ret._id;
+  delete ret.__v;
+  delete ret.passwordHash;
+  return ret;
+};
+
+adminSchema.set("toJSON", { versionKey: false, transform: adminTransform });
+adminSchema.set("toObject", { versionKey: false, transform: adminTransform });
+
 export const Admin = model<IAdmin>('Admin', adminSchema)
 

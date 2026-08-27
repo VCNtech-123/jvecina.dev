@@ -70,4 +70,14 @@ const projectSchema = new Schema<IProject>(
 
 projectSchema.index({ featured: 1, order: 1, createdAt: -1 });
 
+const baseTransform = (_doc: any, ret: any) => {
+  ret.id = ret._id;
+  delete ret._id;
+  delete ret.__v;
+  return ret;
+};
+
+projectSchema.set("toJSON", { versionKey: false, transform: baseTransform });
+projectSchema.set("toObject", { versionKey: false, transform: baseTransform });
+
 export const Project = model<IProject>("Project", projectSchema);
