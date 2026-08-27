@@ -1,9 +1,9 @@
-// client/src/components/home/HomeHero.tsx
+
 import { Link } from "react-router-dom";
 import Container from "../ui/Container";
 
-const STAGES = ["Idea", "Design", "Build", "Deploy"] as const;
-const ACTIVE_STAGE_INDEX = 2; // "Build" — reflects what you're currently doing on Plinth
+const STAGES = ["Idea", "Design", "Building", "Deploy"] as const;
+const ACTIVE_STAGE_INDEX = 2; 
 
 const ArrowIcon = ({ className = "" }: { className?: string }) => (
   <svg
@@ -22,9 +22,6 @@ const ArrowIcon = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-/** Small "build pipeline" readout — the hero's one signature element.
- *  It's a literal, working diagram of "from idea to deployment," not a
- *  decorative flourish, so it earns its motion. */
 const BuildPipeline = () => (
   <div>
     <div className="flex items-center" aria-hidden="true">
@@ -56,7 +53,7 @@ const BuildPipeline = () => (
 
 const HomeHero = () => {
   return (
-    <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
+    <section className="relative overflow-hidden py-10 md:py-28 lg:py-15">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -left-24 top-10 h-72 w-72 animate-glow-pulse rounded-full bg-accent/20 blur-[100px] motion-reduce:animate-none"
@@ -91,8 +88,8 @@ const HomeHero = () => {
             className="mt-7 max-w-2xl animate-fade-up text-[16px] leading-7 text-muted motion-reduce:animate-none md:text-[17px]"
             style={{ animationDelay: "160ms" }}
           >
-            Full-stack developer focused on React, TypeScript, Node.js, and MongoDB. I build practical
-            applications with clean interfaces, structured APIs, and maintainable code.
+            I work with React, TypeScript, Node.js, and MongoDB to build practical applications with clean interfaces, 
+            structured APIs, and maintainable code.
           </p>
 
           {/* Actions */}
