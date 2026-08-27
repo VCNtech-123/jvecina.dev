@@ -1,8 +1,8 @@
-import type { ReactNode } from "react";
+import type { HTMLAttributes } from "react";
 import cn from "../../utils/cn";
 
-const Container = ({ children, className = "" }: { children: ReactNode; className?: string }) => {
-  return <div className={cn("mx-auto w-full max-w-6xl px-4", className)}>{children}</div>;
+const Container = ({ className = "", ...props }: HTMLAttributes<HTMLDivElement>) => {
+  return <div className={cn("container-page", className)} {...props} />;
 };
 
 export default Container;
