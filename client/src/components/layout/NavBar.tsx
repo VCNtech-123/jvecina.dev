@@ -1,25 +1,97 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Container from "../ui/Container";
 import cn from "../../utils/cn";
 
+const GithubIcon = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+  </svg>
+);
+
+const LinkedInIcon = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+  </svg>
+);
+
+const ExternalLinkIcon = ({ className = "" }: { className?: string }) => (
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M7 17 17 7" />
+    <path d="M7 7h10v10" />
+  </svg>
+);
+
+const MenuIcon = ({ className = "" }: { className?: string }) => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <line x1="4" x2="20" y1="12" y2="12" />
+    <line x1="4" x2="20" y1="6" y2="6" />
+    <line x1="4" x2="20" y1="18" y2="18" />
+  </svg>
+);
+
+const CloseIcon = ({ className = "" }: { className?: string }) => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </svg>
+);
+
+const NAV_ITEMS = [
+  { label: "Projects", path: "/projects" },
+  { label: "Contact", path: "/contact" },
+];
+
 const Navbar = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
-      "relative px-2 py-1.5 text-[13px] font-medium transition-colors",
-      "after:absolute after:inset-x-2 after:-bottom-[7px] after:h-px after:origin-center after:scale-x-0 after:bg-accent after:transition-transform",
+      "relative px-3 py-1.5 text-sm font-medium transition-colors duration-200 rounded-md",
+      "after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:rounded-full after:bg-accent after:transition-transform after:duration-200",
       isActive
         ? "text-text after:scale-x-100"
-        : "text-muted hover:text-text"
+        : "text-muted hover:text-text hover:bg-surface/50 after:scale-x-0"
     );
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-xl">
       <Container className="flex h-16 items-center justify-between">
-        {/* Brand + Navigation */}
-        <div className="flex items-center gap-8">
+        {/* Left: Brand + Navigation */}
+        <div className="flex items-center gap-10">
           <NavLink
             to="/"
-            className="group flex items-center text-[15px] font-semibold tracking-tight"
+            className="group flex items-center text-base font-semibold tracking-tight"
             aria-label="jvecina.dev home"
           >
             <span className="text-text transition-colors group-hover:text-accent">
@@ -28,40 +100,125 @@ const Navbar = () => {
             <span className="text-accent">.dev</span>
           </NavLink>
 
+          {/* Desktop Navigation */}
           <nav className="hidden items-center gap-1 md:flex">
-            <NavLink to="/projects" className={linkClass}>
-              Projects
-            </NavLink>
-
-            <NavLink to="/contact" className={linkClass}>
-              Contact
-            </NavLink>
+            {NAV_ITEMS.map((item) => (
+              <NavLink key={item.path} to={item.path} className={linkClass}>
+                {item.label}
+              </NavLink>
+            ))}
           </nav>
         </div>
 
-        {/* External Links */}
-        <div className="flex items-center gap-4">
+        {/* Right: External Actions */}
+        <div className="hidden items-center gap-3 md:flex">
           <a
             href="https://github.com/your-username"
             target="_blank"
             rel="noreferrer"
-            className="text-[13px] font-medium text-muted transition-colors hover:text-text"
+            aria-label="GitHub"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface/50 text-muted transition-all hover:border-accent/40 hover:text-text"
           >
-            GitHub
-            <span className="ml-1 text-[10px] opacity-50">↗</span>
+            <GithubIcon className="h-4 w-4" />
           </a>
 
           <a
             href="https://linkedin.com/in/your-profile"
             target="_blank"
             rel="noreferrer"
-            className="text-[13px] font-medium text-muted transition-colors hover:text-text"
+            aria-label="LinkedIn"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface/50 text-muted transition-all hover:border-accent/40 hover:text-text"
           >
-            LinkedIn
-            <span className="ml-1 text-[10px] opacity-50">↗</span>
+            <LinkedInIcon className="h-4 w-4" />
+          </a>
+
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+            className="group inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/10 px-3.5 py-1.5 text-xs font-medium text-accent transition-all hover:bg-accent hover:text-bg"
+          >
+            Resume
+            <ExternalLinkIcon className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
+
+        {/* Mobile Menu Toggle Button */}
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface/50 text-muted transition-colors hover:text-text md:hidden"
+          aria-label="Toggle Navigation Menu"
+        >
+          {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+        </button>
       </Container>
+
+      {/* Mobile Menu Overlay Drawer */}
+      {mobileMenuOpen && (
+        <div className="border-b border-border bg-bg/95 px-6 py-6 backdrop-blur-2xl md:hidden">
+          <nav className="flex flex-col gap-3">
+            <NavLink
+              to="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className={({ isActive }) =>
+                cn(
+                  "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  isActive ? "bg-accent/10 text-accent" : "text-muted hover:text-text"
+                )
+              }
+            >
+              Home
+            </NavLink>
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  cn(
+                    "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                    isActive ? "bg-accent/10 text-accent" : "text-muted hover:text-text"
+                  )
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+
+            <div className="mt-4 flex items-center justify-between border-t border-border/60 pt-4">
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://github.com/your-username"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-muted transition-colors hover:text-text"
+                >
+                  <GithubIcon className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://linkedin.com/in/your-profile"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-muted transition-colors hover:text-text"
+                >
+                  <LinkedInIcon className="h-4 w-4" />
+                </a>
+              </div>
+
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/10 px-3.5 py-1.5 text-xs font-medium text-accent"
+              >
+                Resume
+                <ExternalLinkIcon />
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
