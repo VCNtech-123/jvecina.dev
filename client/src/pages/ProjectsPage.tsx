@@ -49,7 +49,7 @@ const ProjectsPage = () => {
   }, [projects]);
 
   return (
-    <Container className="py-12">
+    <Container className="py-12" id="projects">
       <header className="mb-8">
         <h1 className="text-3xl font-semibold tracking-tight">Projects</h1>
         <p className="mt-2 max-w-2xl text-[15px] leading-6 text-muted">

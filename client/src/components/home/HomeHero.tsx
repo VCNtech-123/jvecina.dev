@@ -1,5 +1,4 @@
 
-import { Link } from "react-router-dom";
 import Container from "../ui/Container";
 
 const STAGES = ["Idea", "Design", "Building", "Deploy"] as const;
@@ -53,7 +52,7 @@ const BuildPipeline = () => (
 
 const HomeHero = () => {
   return (
-    <section className="relative overflow-hidden py-10 md:py-28 lg:py-15">
+    <section className="relative overflow-hidden py-10 md:py-28 lg:py-20">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -left-24 top-10 h-72 w-72 animate-glow-pulse rounded-full bg-accent/20 blur-[100px] motion-reduce:animate-none"
@@ -97,14 +96,14 @@ const HomeHero = () => {
             className="mt-8 flex animate-fade-up flex-wrap items-center gap-3 motion-reduce:animate-none"
             style={{ animationDelay: "240ms" }}
           >
-            <Link to="/projects" className="group/cta btn-primary">
+            <a href="#projects" className="group/cta btn-primary">
               View projects
               <ArrowIcon className="ml-1.5 transition-transform duration-200 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
-            </Link>
+            </a>
 
-            <Link to="/contact" className="btn-secondary">
+            <a href="#contacts" className="btn-secondary">
               Get in touch
-            </Link>
+            </a>
 
             <a href="/resume.pdf" target="_blank" rel="noreferrer" className="group/cta btn-ghost">
               Resume
