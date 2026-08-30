@@ -112,15 +112,15 @@ const Navbar = () => {
       <Container className="flex h-16 items-center justify-between">
         <div className="flex items-center gap-10">
           {/* Brand: scroll to top */}
-          <button
+          <a
             type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            href="#home"
             className="group flex items-center text-base font-semibold tracking-tight"
             aria-label="jvecina.dev home"
           >
             <span className="text-text transition-colors group-hover:text-accent">jvecina</span>
             <span className="text-accent">.dev</span>
-          </button>
+          </a>
 
           {/* Desktop Navigation */}
           <nav className="hidden items-center gap-1 md:flex">
