@@ -11,7 +11,7 @@ const ProjectCard = ({ project, featured = false }: { project: Project; featured
   const cover = project.images?.[0];
   const tagLimit = featured ? FEATURED_TAG_LIMIT : DEFAULT_TAG_LIMIT;
   const tags = (project.techStack ?? []).slice(0, tagLimit);
-  const detailHref = `/projects/${project.slug}`;
+  const detailHref = `/${project.slug}`;
 
   return (
     <Card
