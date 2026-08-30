@@ -144,7 +144,6 @@ const HomeHero = () => {
               </a>
             </div>
 
-            {/* Bottom metadata */}
             <div
               className="mt-12 flex animate-fade-up flex-col gap-8 motion-reduce:animate-none sm:flex-row sm:flex-wrap sm:items-start sm:gap-x-12 sm:gap-y-8"
               style={{ animationDelay: "320ms" }}
