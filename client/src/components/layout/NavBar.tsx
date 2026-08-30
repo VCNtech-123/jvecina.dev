@@ -115,16 +115,14 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    const saved = localStorage.getItem("theme") as "dark" | "light" | null;
+  const saved = localStorage.getItem("theme") as "dark" | "light" | null;
 
-    if (saved === "dark" || saved === "light") {
-      applyTheme(saved);
-      return;
-    }
-
-    const prefersLight = window.matchMedia?.("(prefers-color-scheme: light)")?.matches;
-    applyTheme(prefersLight ? "light" : "dark");
-  }, [applyTheme]);
+  if (saved === "light") {
+    applyTheme("light");
+  } else {
+    applyTheme("dark");
+  }
+}, [applyTheme]);
 
   const toggleTheme = () => applyTheme(theme === "dark" ? "light" : "dark");
 

@@ -24,17 +24,19 @@
   html.light {
     color-scheme: light;
 
-    --color-bg: #fafafa;
-    --color-surface: #ffffff;
-    --color-surface-hover: #f4f4f5;
-    --color-border: #e4e4e7;
+    --color-bg: #f5f4f1;
+    --color-surface: #fbfaf8;
+    --color-surface-hover: #f0efeb;
+    --color-border: #e2e0da;
 
-    --color-text: #09090b;
-    --color-muted: #52525b;
+    --color-text: #26241f;
+    --color-muted: #6b6862;
 
-    --color-accent-ink: #052e24;
+    --color-accent: #0d9668;
+    --color-accent-hover: #0b7d58;
+    --color-accent-ink: #f6fef9;
 
-    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.12);
+    --shadow-card: 0 10px 30px -12px rgba(38, 36, 31, 0.1);
   }
 }
 
