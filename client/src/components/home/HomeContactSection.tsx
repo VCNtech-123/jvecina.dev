@@ -32,14 +32,13 @@ const HomeContactSection = () => {
     <section id="contact" className="py-16 scroll-mt-24 md:py-24">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1fr] lg:items-center lg:gap-16">
-          {/* Left: flowing intro column — no card, so it doesn't compete
-              with the form's height. It's context, not a second action. */}
+
           <div>
             <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Get in touch</p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">Let's talk</h2>
             <p className="mt-4 max-w-md text-[15px] leading-7 text-muted">
-              Want to collaborate or talk about a role? Send a message — I usually reply within{" "}
-              <span className="text-text">24–48 hours</span>.
+              Want to collaborate or talk about a role? Send a message, I usually reply within{" "}
+              <span className="text-text">24-48 hours</span>.
             </p>
 
             <div className="mt-8 space-y-3 border-t border-border/60 pt-6">
@@ -57,7 +56,6 @@ const HomeContactSection = () => {
             </div>
           </div>
 
-          {/* Right: the one card in this section — the actual action */}
           <ContactForm />
         </div>
       </Container>

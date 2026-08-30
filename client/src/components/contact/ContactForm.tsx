@@ -165,10 +165,6 @@ const StatusBanner = ({ tone, children }: { tone: "error" | "success"; children:
   </div>
 );
 
-// ---------------------------------------------------------------------------
-// Form
-// ---------------------------------------------------------------------------
-
 const ContactForm = ({ title = "Send a message" }: { title?: string }) => {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});

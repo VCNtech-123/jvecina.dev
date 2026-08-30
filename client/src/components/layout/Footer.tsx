@@ -25,13 +25,6 @@ const FacebookIcon = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-const MailIcon = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect width="20" height="16" x="2" y="4" rx="2" />
-    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-  </svg>
-);
-
 const NAV_LINKS = [
   { label: "Home", href: "#" },
   { label: "Projects", href: "#projects" },
@@ -44,7 +37,6 @@ const SOCIAL_LINKS = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/jvecinadev/", Icon: LinkedInIcon },
   { label: "Facebook", href: "https://facebook.com/vecina.jan", Icon: FacebookIcon },
   { label: "Instagram", href: "https://instagram.com/vecina.jan", Icon: InstagramIcon },
-  { label: "Email", href: "johnvecina640@gmail.com", Icon: MailIcon },
 ];
 
 const Footer = () => {

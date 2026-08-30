@@ -1,7 +1,7 @@
+
 import { useCallback, useEffect, useState } from "react";
 import Container from "../ui/Container";
 import cn from "../../utils/cn";
-import Resume from "../../assets/John_Francis_Vecina_Resume.pdf";
 import useScrollSpy from "../../hooks/useScrollSpy";
 
 const GithubIcon = ({ className = "" }: { className?: string }) => (
@@ -13,23 +13,6 @@ const GithubIcon = ({ className = "" }: { className?: string }) => (
 const LinkedInIcon = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-  </svg>
-);
-
-const ExternalLinkIcon = ({ className = "" }: { className?: string }) => (
-  <svg
-    width="12"
-    height="12"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="M7 17 17 7" />
-    <path d="M7 7h10v10" />
   </svg>
 );
 
@@ -68,32 +51,83 @@ const CloseIcon = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
+const SunIcon = ({ className = "" }: { className?: string }) => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2" />
+    <path d="M12 20v2" />
+    <path d="M4.93 4.93l1.41 1.41" />
+    <path d="M17.66 17.66l1.41 1.41" />
+    <path d="M2 12h2" />
+    <path d="M20 12h2" />
+    <path d="M6.34 17.66l-1.41 1.41" />
+    <path d="M19.07 4.93l-1.41 1.41" />
+  </svg>
+);
+
+const MoonIcon = ({ className = "" }: { className?: string }) => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8Z" />
+  </svg>
+);
+
 const NAV_ITEMS = [
   { label: "Projects", id: "projects" },
   { label: "Skills", id: "skills" },
-  { label: "About", id: "about"},
+  { label: "About", id: "about" },
   { label: "Contact", id: "contact" },
-];
+] as const;
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
-  const activeSectionId = useScrollSpy(["projects", "skills", "contact"], {
+  const activeSectionId = useScrollSpy(["projects", "skills", "about", "contact"], {
     rootMargin: "-35% 0px -55% 0px",
   });
 
-  const scrollToId = useCallback((id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", `#${id}`);
+  const applyTheme = useCallback((t: "dark" | "light") => {
+    const root = document.documentElement;
+    if (t === "light") root.classList.add("light");
+    else root.classList.remove("light");
+    localStorage.setItem("theme", t);
+    setTheme(t);
   }, []);
 
   useEffect(() => {
-    const hash = window.location.hash.replace("#", "");
-    if (!hash) return;
-    const el = document.getElementById(hash);
+  const saved = localStorage.getItem("theme") as "dark" | "light" | null;
+
+  if (saved === "light") {
+    applyTheme("light");
+  } else {
+    applyTheme("dark");
+  }
+}, [applyTheme]);
+
+  const toggleTheme = () => applyTheme(theme === "dark" ? "light" : "dark");
+
+  const scrollToId = useCallback((id: string) => {
+    const el = document.getElementById(id);
     if (!el) return;
     el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
@@ -140,6 +174,7 @@ const Navbar = () => {
           </nav>
         </div>
 
+        {/* Desktop right controls */}
         <div className="hidden items-center gap-3 md:flex">
           <a
             href="https://github.com/jvecinadev"
@@ -161,17 +196,17 @@ const Navbar = () => {
             <LinkedInIcon className="h-4 w-4" />
           </a>
 
-          <a
-            href={Resume}
-            target="_blank"
-            rel="noreferrer"
-            className="group inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/10 px-3.5 py-1.5 text-xs font-medium text-accent transition-all hover:bg-accent hover:text-bg"
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface/50 text-muted transition-all hover:border-accent/40 hover:text-text"
           >
-            Resume
-            <ExternalLinkIcon className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
+            {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+          </button>
         </div>
 
+        {/* Mobile menu toggle */}
         <button
           type="button"
           onClick={() => setMobileMenuOpen((v) => !v)}
@@ -213,28 +248,30 @@ const Navbar = () => {
                   target="_blank"
                   rel="noreferrer"
                   className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-muted transition-colors hover:text-text"
+                  aria-label="GitHub"
                 >
                   <GithubIcon className="h-4 w-4" />
                 </a>
+
                 <a
                   href="https://www.linkedin.com/in/jvecinadev/"
                   target="_blank"
                   rel="noreferrer"
                   className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-muted transition-colors hover:text-text"
+                  aria-label="LinkedIn"
                 >
                   <LinkedInIcon className="h-4 w-4" />
                 </a>
-              </div>
 
-              <a
-                href={Resume}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/10 px-3.5 py-1.5 text-xs font-medium text-accent"
-              >
-                Resume
-                <ExternalLinkIcon />
-              </a>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  aria-label="Toggle theme"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-muted transition-colors hover:text-text"
+                >
+                  {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+                </button>
+              </div>
             </div>
           </nav>
         </div>

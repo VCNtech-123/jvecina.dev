@@ -4,8 +4,8 @@ import { TechIcon } from "../projects/TechBadge";
 import Profile from "../../assets/profile.png";
 import Resume from "../../assets/John_Francis_Vecina_Resume.pdf"
 
-const STAGES = ["Idea", "Design", "Building", "Deploy"] as const;
-const ACTIVE_STAGE_INDEX = 2;
+const STAGES = ["Idea", "Design", "Build", "Deploy"] as const;
+const ACTIVE_STAGE_INDEX = 1;
 
 const CORE_STACK = ["react", "typescript", "nodejs", "mongodb"];
 
@@ -49,7 +49,7 @@ const BuildPipeline = () => (
       ))}
     </div>
     <p className="mt-2 text-sm text-text">
-      {STAGES[ACTIVE_STAGE_INDEX]} stage · <span className="text-accent">Plinth</span>
+      {STAGES[ACTIVE_STAGE_INDEX]} stage · <span className="text-accent">BarangayWatch</span>
     </p>
   </div>
 );
@@ -93,7 +93,7 @@ const ProfilePanel = () => {
 
 const HomeHero = () => {
   return (
-    <section className="relative flex min-h-[calc(100vh-5rem)] flex-col justify-center overflow-hidden py-12 lg:py-0">
+    <section className="relative flex min-h-[calc(100vh-5rem)] flex-col justify-center overflow-hidden py-12 lg:py-0" id="home">
       <Container className="relative w-full">
         <div className="grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
           {/* Left: copy */}
