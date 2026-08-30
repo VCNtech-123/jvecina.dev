@@ -53,7 +53,7 @@ const ProjectsPage = () => {
       <header className="mb-8">
         <h1 className="text-3xl font-semibold tracking-tight">Projects</h1>
         <p className="mt-2 max-w-2xl text-[15px] leading-6 text-muted">
-          A selection of full-stack work — focused on clean APIs, reliable data models, and polished UI.
+          A selection of full-stack work focused on clean APIs, reliable data models, and polished UI.
         </p>
       </header>
 
