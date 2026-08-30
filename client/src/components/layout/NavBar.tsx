@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Container from "../ui/Container";
 import cn from "../../utils/cn";
+import Resume from '../../assets/John_Francis_Vecina_Resume.pdf'
 
 const GithubIcon = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -110,7 +111,6 @@ const Navbar = () => {
           </nav>
         </div>
 
-        {/* Right: External Actions */}
         <div className="hidden items-center gap-3 md:flex">
           <a
             href="https://github.com/jvecinadev"
@@ -143,7 +143,6 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* Mobile Menu Toggle Button */}
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -207,8 +206,7 @@ const Navbar = () => {
               </div>
 
               <a
-                href="/resume.pdf"
-                target="_blank"
+                href={Resume}
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/10 px-3.5 py-1.5 text-xs font-medium text-accent"
               >
