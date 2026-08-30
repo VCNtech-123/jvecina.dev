@@ -1,7 +1,7 @@
 
-import { Link } from "react-router-dom";
 import Container from "../ui/Container";
 import Card from "../ui/Card";
+import Resume from "../../assets/John_Francis_Vecina_Resume.pdf"
 
 const LockIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -59,7 +59,7 @@ const HomeAboutSection = () => {
 
             <p className="mt-3 text-[15px] leading-7 text-muted">
               I'm a full-stack developer focused on shipping clean, maintainable web applications. I
-              like building systems where the UI, API, and database design all feel consistent — good
+              like building systems where the UI, API, and database design all feel consistent good
               validation, predictable error handling, and a smooth user experience.
             </p>
 
@@ -68,16 +68,16 @@ const HomeAboutSection = () => {
                 Currently building
               </p>
               <p className="mt-1.5 text-[15px] leading-7 text-text">
-                <span className="font-medium text-accent">Plinth</span> — a multi-tenant SaaS-style app
+                <span className="font-medium text-accent">Plinth</span> - a multi-tenant SaaS-style app
                 with workspace-based access control, caching, and integration tests.
               </p>
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/projects" className="btn-secondary">
+              <a href="#projects" className="btn-secondary">
                 View projects
-              </Link>
-              <a href="/resume.pdf" target="_blank" rel="noreferrer" className="btn-ghost">
+              </a>
+              <a href={Resume} target="_blank" rel="noreferrer" className="btn-ghost">
                 Resume
               </a>
             </div>
@@ -96,7 +96,7 @@ const HomeAboutSection = () => {
                     <Icon />
                   </span>
                   <span className="text-[15px] leading-6 text-muted">
-                    <span className="font-medium text-text">{title}</span> — {detail}
+                    <span className="font-medium text-text">{title}</span> - {detail}
                   </span>
                 </li>
               ))}
