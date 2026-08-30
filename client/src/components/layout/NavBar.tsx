@@ -113,7 +113,7 @@ const Navbar = () => {
         {/* Right: External Actions */}
         <div className="hidden items-center gap-3 md:flex">
           <a
-            href="https://github.com/your-username"
+            href="https://github.com/jvecinadev"
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"
@@ -123,7 +123,7 @@ const Navbar = () => {
           </a>
 
           <a
-            href="https://linkedin.com/in/your-profile"
+            href="https://www.linkedin.com/in/jvecinadev/"
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
