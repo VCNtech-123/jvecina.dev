@@ -1,3 +1,4 @@
+// client/src/pages/ProjectsPage.tsx
 import { useCallback, useEffect, useMemo, useState } from "react";
 import api, { getErrorMessage } from "../api/api";
 import type { ApiListResponse, Project } from "../types/api";
@@ -17,16 +18,32 @@ const ProjectsPage = () => {
   useEffect(() => {
     const controller = new AbortController();
 
+    const loadProjects = async (): Promise<Project[]> => {
+      try {
+        const staticRes = await api.get<Project[]>("/projects.json", {
+          baseURL: "",
+          withCredentials: false,
+          signal: controller.signal,
+        });
+
+        if (Array.isArray(staticRes.data)) return staticRes.data;
+      } catch {
+      }
+
+      const apiRes = await api.get<ApiListResponse<Project>>("/api/projects", {
+        signal: controller.signal,
+      });
+
+      return apiRes.data.data;
+    };
+
     const run = async () => {
       try {
         setLoading(true);
         setError("");
 
-        const res = await api.get<ApiListResponse<Project>>("/api/projects", {
-          signal: controller.signal,
-        });
-
-        setProjects(res.data.data);
+        const data = await loadProjects();
+        if (!controller.signal.aborted) setProjects(data);
       } catch (e) {
         if (controller.signal.aborted) return;
         setError(getErrorMessage(e));

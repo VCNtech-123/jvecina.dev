@@ -1,20 +1,19 @@
-
+// client/src/pages/ProjectDetailPage.tsx
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ExternalLink, ArrowLeft } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 
-
 import api, { getErrorMessage } from "../api/api";
 import type { ApiOneResponse, Project } from "../types/api";
 
 import Container from "../components/ui/Container";
-import Badge from "../components/ui/Badge";
 import ButtonLink from "../components/ui/ButtonLink";
 import Card from "../components/ui/Card";
 import GithubReadme from "../components/projects/GithubReadme";
+import TechBadge from "../components/projects/TechBadge";
 
-const BackToProjectsButton = ({ onClick }: { onClick: () => void }) => (
+const BackToProjectsButton = ({ onClick, className = "" }: { onClick: () => void; className?: string }) => (
   <button
     type="button"
     onClick={onClick}
@@ -24,6 +23,7 @@ const BackToProjectsButton = ({ onClick }: { onClick: () => void }) => (
       "text-sm font-medium text-muted",
       "transition-colors hover:text-text hover:bg-surface-hover",
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50",
+      className,
     ].join(" ")}
   >
     <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -45,7 +45,7 @@ const ProjectDetailPage = () => {
   };
 
   useEffect(() => {
-    let ignore = false;
+    const controller = new AbortController();
 
     const run = async () => {
       setLoading(true);
@@ -59,20 +59,39 @@ const ProjectDetailPage = () => {
       }
 
       try {
-        const res = await api.get<ApiOneResponse<Project>>(`/api/projects/${slug}`);
-        if (!ignore) setProject(res.data.data);
+        try {
+          const staticRes = await api.get<Project[]>("/projects.json", {
+            baseURL: "",
+            withCredentials: false,
+            signal: controller.signal,
+          });
+
+          if (Array.isArray(staticRes.data)) {
+            const found = staticRes.data.find((p) => p.slug === slug);
+            if (found) {
+              setProject(found);
+              setLoading(false);
+              return;
+            }
+          }
+        } catch {
+        }
+
+        const res = await api.get<ApiOneResponse<Project>>(`/api/projects/${slug}`, {
+          signal: controller.signal,
+        });
+
+        setProject(res.data.data);
       } catch (e) {
-        if (!ignore) setError(getErrorMessage(e));
+        if (controller.signal.aborted) return;
+        setError(getErrorMessage(e));
       } finally {
-        if (!ignore) setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
     };
 
     run();
-
-    return () => {
-      ignore = true;
-    };
+    return () => controller.abort();
   }, [slug]);
 
   if (loading) {
@@ -98,7 +117,7 @@ const ProjectDetailPage = () => {
           <p className="font-medium text-text">Something went wrong</p>
           <p className="mt-1 text-red-300/80">{error}</p>
 
-          <BackToProjectsButton onClick={goBackToProjectsSection} />
+          <BackToProjectsButton className="mt-4" onClick={goBackToProjectsSection} />
         </Card>
       </Container>
     );
@@ -111,7 +130,7 @@ const ProjectDetailPage = () => {
           <p className="font-medium text-text">Project not found</p>
           <p className="mt-1 text-muted">The project you're looking for doesn't exist.</p>
 
-          <BackToProjectsButton onClick={goBackToProjectsSection} />
+          <BackToProjectsButton className="mt-4" onClick={goBackToProjectsSection} />
         </Card>
       </Container>
     );
@@ -174,9 +193,7 @@ const ProjectDetailPage = () => {
                       onClick={() => setActiveImage(i)}
                       className={[
                         "shrink-0 overflow-hidden rounded-lg border transition",
-                        i === activeImage
-                          ? "border-accent"
-                          : "border-border opacity-60 hover:opacity-100",
+                        i === activeImage ? "border-accent" : "border-border opacity-60 hover:opacity-100",
                       ].join(" ")}
                       aria-label={`View image ${i + 1}`}
                     >
@@ -202,7 +219,7 @@ const ProjectDetailPage = () => {
               <h3 className="text-sm font-semibold tracking-tight">Tech stack</h3>
               <div className="mt-3 flex flex-wrap gap-2">
                 {project.techStack.map((t) => (
-                  <Badge key={t}>{t}</Badge>
+                  <TechBadge key={t} techKey={t} />
                 ))}
               </div>
             </Card>
