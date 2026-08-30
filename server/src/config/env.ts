@@ -7,6 +7,8 @@ export const env = {
     mongoUri: process.env.MONGO_URI as string,
     port: process.env.PORT || 5000,
     jwt: process.env.JWT_SECRET as string,
-    expiresIn: process.env.JWT_EXPIRES_IN as string
+    expiresIn: process.env.JWT_EXPIRES_IN as string,
+    vercelDeployHookUrl: process.env.VERCEL_DEPLOY_HOOK_URL as string,
+    clientUrl: process.env.CLIENT_URL as string
 }
 
