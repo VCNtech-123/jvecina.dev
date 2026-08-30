@@ -21,6 +21,24 @@
 }
 
 @layer base {
+  html.light {
+    color-scheme: light;
+
+    --color-bg: #fafafa;
+    --color-surface: #ffffff;
+    --color-surface-hover: #f4f4f5;
+    --color-border: #e4e4e7;
+
+    --color-text: #09090b;
+    --color-muted: #52525b;
+
+    --color-accent-ink: #052e24;
+
+    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.12);
+  }
+}
+
+@layer base {
   html {
     color-scheme: dark;
     font-family: var(--font-sans);
