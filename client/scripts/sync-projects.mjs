@@ -4,7 +4,7 @@ const url = process.env.SYNC_PROJECTS_URL;
 if (!url) {
   console.error("Missing SYNC_PROJECTS_URL");
   process.exit(1);
-}
+} 
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
