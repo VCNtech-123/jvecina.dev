@@ -80,12 +80,15 @@
   .animate-fade-up {
     animation: none;
   }
+}
 
 
 @layer base {
-  html { scroll-behavior: smooth; }
-}}
-
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+}
 
 @keyframes fade-up {
   from {

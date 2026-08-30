@@ -1,4 +1,5 @@
 import Container from "../ui/Container";
+import Resume from '../../assets/John_Francis_Vecina_Resume.pdf'
 
 const GithubIcon = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -31,20 +32,19 @@ const MailIcon = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-// --- Config ---
 const NAV_LINKS = [
   { label: "Home", href: "#" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
-  { label: "Resume", href: "/resume.pdf" },
+  { label: "Resume", href: Resume },
 ];
 
 const SOCIAL_LINKS = [
-  { label: "GitHub", href: "https://github.com/yourusername", Icon: GithubIcon },
-  { label: "LinkedIn", href: "https://linkedin.com/in/yourusername", Icon: LinkedInIcon },
-  { label: "Facebook", href: "https://facebook.com/yourusername", Icon: FacebookIcon },
-  { label: "Instagram", href: "https://instagram.com/yourusername", Icon: InstagramIcon },
-  { label: "Email", href: "mailto:your.email@example.com", Icon: MailIcon },
+  { label: "GitHub", href: "https://github.com/jvecinadev", Icon: GithubIcon },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/jvecinadev/", Icon: LinkedInIcon },
+  { label: "Facebook", href: "https://facebook.com/vecina.jan", Icon: FacebookIcon },
+  { label: "Instagram", href: "https://instagram.com/vecina.jan", Icon: InstagramIcon },
+  { label: "Email", href: "johnvecina640@gmail.com", Icon: MailIcon },
 ];
 
 const Footer = () => {

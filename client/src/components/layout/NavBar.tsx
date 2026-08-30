@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 import Container from "../ui/Container";
 import cn from "../../utils/cn";
+import Resume from "../../assets/John_Francis_Vecina_Resume.pdf";
+import useScrollSpy from "../../hooks/useScrollSpy";
 
 const GithubIcon = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -68,18 +69,40 @@ const CloseIcon = ({ className = "" }: { className?: string }) => (
 );
 
 const NAV_ITEMS = [
-  { label: "Projects", path: "/projects" },
-  { label: "Contact", path: "/contact" },
+  { label: "Projects", id: "projects" },
+  { label: "Skills", id: "skills" },
+  { label: "About", id: "about"},
+  { label: "Contact", id: "contact" },
 ];
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const linkClass = ({ isActive }: { isActive: boolean }) =>
+  const activeSectionId = useScrollSpy(["projects", "skills", "contact"], {
+    rootMargin: "-35% 0px -55% 0px",
+  });
+
+  const scrollToId = useCallback((id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", `#${id}`);
+  }, []);
+
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (!hash) return;
+    const el = document.getElementById(hash);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  const navItemClass = (id: string) =>
     cn(
       "relative px-3 py-1.5 text-sm font-medium transition-colors duration-200 rounded-md",
       "after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:rounded-full after:bg-accent after:transition-transform after:duration-200",
-      isActive
+      activeSectionId === id
         ? "text-text after:scale-x-100"
         : "text-muted hover:text-text hover:bg-surface/50 after:scale-x-0"
     );
@@ -87,33 +110,39 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-xl">
       <Container className="flex h-16 items-center justify-between">
-        {/* Left: Brand + Navigation */}
         <div className="flex items-center gap-10">
-          <NavLink
-            to="/"
+          {/* Brand: scroll to top */}
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="group flex items-center text-base font-semibold tracking-tight"
             aria-label="jvecina.dev home"
           >
-            <span className="text-text transition-colors group-hover:text-accent">
-              jvecina
-            </span>
+            <span className="text-text transition-colors group-hover:text-accent">jvecina</span>
             <span className="text-accent">.dev</span>
-          </NavLink>
+          </button>
 
           {/* Desktop Navigation */}
           <nav className="hidden items-center gap-1 md:flex">
             {NAV_ITEMS.map((item) => (
-              <NavLink key={item.path} to={item.path} className={linkClass}>
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={navItemClass(item.id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToId(item.id);
+                }}
+              >
                 {item.label}
-              </NavLink>
+              </a>
             ))}
           </nav>
         </div>
 
-        {/* Right: External Actions */}
         <div className="hidden items-center gap-3 md:flex">
           <a
-            href="https://github.com/your-username"
+            href="https://github.com/jvecinadev"
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"
@@ -123,7 +152,7 @@ const Navbar = () => {
           </a>
 
           <a
-            href="https://linkedin.com/in/your-profile"
+            href="https://www.linkedin.com/in/jvecinadev/"
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
@@ -133,7 +162,7 @@ const Navbar = () => {
           </a>
 
           <a
-            href="/resume.pdf"
+            href={Resume}
             target="_blank"
             rel="noreferrer"
             className="group inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/10 px-3.5 py-1.5 text-xs font-medium text-accent transition-all hover:bg-accent hover:text-bg"
@@ -143,10 +172,9 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* Mobile Menu Toggle Button */}
         <button
           type="button"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          onClick={() => setMobileMenuOpen((v) => !v)}
           className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface/50 text-muted transition-colors hover:text-text md:hidden"
           aria-label="Toggle Navigation Menu"
         >
@@ -154,42 +182,34 @@ const Navbar = () => {
         </button>
       </Container>
 
-      {/* Mobile Menu Overlay Drawer */}
-      {mobileMenuOpen && (
+      {/* Mobile Menu */}
+      {mobileMenuOpen ? (
         <div className="border-b border-border bg-bg/95 px-6 py-6 backdrop-blur-2xl md:hidden">
           <nav className="flex flex-col gap-3">
-            <NavLink
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                cn(
-                  "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                  isActive ? "bg-accent/10 text-accent" : "text-muted hover:text-text"
-                )
-              }
-            >
-              Home
-            </NavLink>
             {NAV_ITEMS.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                onClick={() => setMobileMenuOpen(false)}
-                className={({ isActive }) =>
-                  cn(
-                    "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                    isActive ? "bg-accent/10 text-accent" : "text-muted hover:text-text"
-                  )
-                }
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToId(item.id);
+                  setMobileMenuOpen(false);
+                }}
+                className={cn(
+                  "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  activeSectionId === item.id
+                    ? "bg-accent/10 text-accent"
+                    : "text-muted hover:text-text"
+                )}
               >
                 {item.label}
-              </NavLink>
+              </a>
             ))}
 
             <div className="mt-4 flex items-center justify-between border-t border-border/60 pt-4">
               <div className="flex items-center gap-3">
                 <a
-                  href="https://github.com/your-username"
+                  href="https://github.com/jvecinadev"
                   target="_blank"
                   rel="noreferrer"
                   className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-muted transition-colors hover:text-text"
@@ -197,7 +217,7 @@ const Navbar = () => {
                   <GithubIcon className="h-4 w-4" />
                 </a>
                 <a
-                  href="https://linkedin.com/in/your-profile"
+                  href="https://www.linkedin.com/in/jvecinadev/"
                   target="_blank"
                   rel="noreferrer"
                   className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-muted transition-colors hover:text-text"
@@ -207,7 +227,7 @@ const Navbar = () => {
               </div>
 
               <a
-                href="/resume.pdf"
+                href={Resume}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/10 px-3.5 py-1.5 text-xs font-medium text-accent"
@@ -218,7 +238,7 @@ const Navbar = () => {
             </div>
           </nav>
         </div>
-      )}
+      ) : null}
     </header>
   );
 };

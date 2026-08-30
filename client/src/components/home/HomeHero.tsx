@@ -2,6 +2,7 @@ import { useState } from "react";
 import Container from "../ui/Container";
 import { TechIcon } from "../projects/TechBadge";
 import Profile from "../../assets/profile.png";
+import Resume from "../../assets/John_Francis_Vecina_Resume.pdf"
 
 const STAGES = ["Idea", "Design", "Building", "Deploy"] as const;
 const ACTIVE_STAGE_INDEX = 2;
@@ -137,13 +138,12 @@ const HomeHero = () => {
                 Get in touch
               </a>
 
-              <a href="/resume.pdf" target="_blank" rel="noreferrer" className="group/cta btn-ghost">
+              <a href={Resume} target="_blank" rel="noreferrer" className="group/cta btn-ghost">
                 Resume
                 <ArrowIcon className="ml-1.5 transition-transform duration-200 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
               </a>
             </div>
 
-            {/* Bottom metadata */}
             <div
               className="mt-12 flex animate-fade-up flex-col gap-8 motion-reduce:animate-none sm:flex-row sm:flex-wrap sm:items-start sm:gap-x-12 sm:gap-y-8"
               style={{ animationDelay: "320ms" }}
