@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
-    // Environment Settings
-    "module": "esnext",
-    "target": "esnext",
-    "moduleResolution": "bundler",
-    "esModuleInterop": true,
+    // Environment & Module Settings for Node.js ESM
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    // Outputs & Paths
+    "outDir": "./dist",
+    "rootDir": "./src",
 
     // Custom Type Resolution
     "typeRoots": [
@@ -12,18 +15,14 @@
       "./src/types"
     ],
 
-    // Outputs
+    // Build Outputs
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    // Stricter Typechecking Options
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": false,
-
-    // Recommended Options
+    // Typechecking
     "strict": true,
-    "jsx": "react-jsx",
+    "noUncheckedIndexedAccess": true,
     "skipLibCheck": true
   },
   "include": [
